@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+        content="MV-RoboBench: Benchmarking Spatial Reasoning of Vision-Language Models in Robotic Scenes.">
+  <meta name="keywords" content="MV-RoboBench, VLM, Spatial Reasoning, Robotics, Embodied AI">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Seeing Across Views: Benchmarking Spatial Reasoning of Vision-Language Models in Robotic Scenes</title>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="icon" href="./static/images/favicon.svg">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+</head>
+<body>
+
+<nav class="navbar" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+  <div class="navbar-menu">
+    <div class="navbar-start" style="flex-grow: 1; justify-content: center;">
+      
+      <a class="navbar-item" href="https://aaronfengzy.github.io/">
+      <span class="icon">
+          <i class="fas fa-home"></i>
+      </span>
+      </a>
+
+      <div class="navbar-item has-dropdown is-hoverable">
+        <a class="navbar-link">
+          More Research
+        </a>
+        <div class="navbar-dropdown">
+          <a class="navbar-item" href="https://microsoft.github.io/VITRA/">
+            VITRA
+          </a>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+</nav>
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          
+          <h1 class="title is-2 publication-title">
+            Seeing Across Views: Benchmarking Spatial<br>Reasoning of Vision-Language Models in Robotic Scenes
+          </h1>
+          
+          <div class="is-size-3 publication-venue" style="color: #2974b5; font-weight: 400; margin-bottom: 20px;">
+            ICLR 2026
+          </div>
+          
+          <div class="is-size-5 publication-authors author-lines" style="line-height: 1.6;">
+            <div class="author-line">
+              <span class="author-name"><a class="author-link-primary" href="https://aaronfengzy.github.io/">Zhiyuan Feng</a><sup>1*†</sup></span>
+              <span class="author-name">Zhaolu Kang<sup>2*</sup></span>
+              <span class="author-name">Qijie Wang<sup>1*</sup></span>
+              <span class="author-name">Zhiying Du<sup>3*†</sup></span>
+            </div>
+            <div class="author-line">
+              <span class="author-name">Jiongrui Yan<sup>2</sup></span>
+              <span class="author-name">Shubin Shi<sup>2</sup></span>
+              <span class="author-name">Chengbo Yuan<sup>1</sup></span>
+              <span class="author-name">Huizhi Liang<sup>1†</sup></span>
+              <span class="author-name">Yu Deng<sup>4</sup></span>
+              <span class="author-name">Qixiu Li<sup>1†</sup></span>
+            </div>
+            <div class="author-line">
+              <span class="author-name">Rushuai Yang<sup>5†</sup></span>
+              <span class="author-name">Arctanx An<sup>2†</sup></span>
+              <span class="author-name">Leqi Zheng<sup>1</sup></span>
+              <span class="author-name">Weijie Wang<sup>6†</sup></span>
+              <span class="author-name">Shawn Chen<sup>6</sup></span>
+            </div>
+            <div class="author-line">
+              <span class="author-name">Sicheng Xu<sup>4</sup></span>
+              <span class="author-name">Yaobo Liang<sup>4</sup></span>
+              <span class="author-name">Jiaolong Yang<sup>4‡</sup></span>
+              <span class="author-name">Baining Guo<sup>4</sup></span>
+            </div>
+          </div>
+
+          <div class="author-meta-divider"></div>
+
+          <div class="is-size-6" style="margin-top: 15px; color: #4a4a4a;">
+            <span class="author-block"><sup>*</sup> equal contribution</span> &nbsp;&nbsp;&nbsp;
+            <span class="author-block"><sup>†</sup> Work done during research internship at Microsoft Research</span> &nbsp;&nbsp;&nbsp;
+            <span class="author-block"><sup>‡</sup> corresponding author</span>
+          </div>
+
+          <div class="is-size-5 publication-authors author-affiliations" style="margin-top: 15px; color: #4a4a4a;">
+            <span class="author-block"><sup>1</sup>Tsinghua University</span>&nbsp;&nbsp;&nbsp;
+            <span class="author-block"><sup>2</sup>Peking University</span>&nbsp;&nbsp;&nbsp;
+            <span class="author-block"><sup>3</sup>Fudan University</span>
+            <br>
+            <span class="author-block"><sup>4</sup>Microsoft Research Asia</span>
+            <br>
+            <span class="author-block"><sup>5</sup>Hong Kong University of Science and Technology</span>&nbsp;&nbsp;&nbsp;
+            <span class="author-block"><sup>6</sup>Zhejiang University</span>
+          </div>
+
+          <div class="column has-text-centered" style="margin-top: 20px;">
+            <div class="publication-links">
+              
+              <span class="link-block">
+                <a href="https://arxiv.org/abs/2510.19400"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                  </span>
+                  <span>arXiv</span>
+                </a>
+              </span>
+
+              <span class="link-block">
+                <a href="https://github.com/microsoft/MV-RoboBench?tab=readme-ov-file"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-github"></i>
+                  </span>
+                  <span>Code</span>
+                  </a>
+              </span>
+              
+            </div>
+          </div>
+          
+          <div class="abstract-inline" style="margin-top: 28px;">
+            <h2 class="title is-3">Abstract</h2>
+            <div class="content has-text-justified">
+              <p>
+                Vision-language models (VLMs) are essential to Embodied AI, enabling robots to perceive, reason, and act in complex environments. They also serve as the foundation for the recent Vision-Language-Action (VLA) models. Yet most evaluations of VLMs focus on single-view settings, leaving their ability to integrate multi-view information underexplored. At the same time, multi-camera setups are increasingly standard in robotic platforms, as they provide complementary perspectives to mitigate occlusion and depth ambiguity. Whether VLMs can effectively leverage such multi-view inputs for robotic reasoning therefore remains an open question.
+              </p>
+              <p>
+                To bridge this gap, we introduce <span class="mv-highlight">MV-RoboBench</span>, a benchmark specifically designed to evaluate the multi-view spatial reasoning capabilities of VLMs in robotic manipulation. MV-RoboBench consists of 1.7k manually curated QA items across eight subtasks, divided into two primary categories: spatial understanding and robotic execution. We evaluate a diverse set of existing VLMs, including both open-source and closed-source models, along with enhanced versions incorporating Chain-of-Thought (CoT)-inspired techniques. 
+              </p>
+              <p>
+                The results show that state-of-the-art models remain far below human performance, underscoring the substantial challenges VLMs face in multi-view robotic perception. Additionally, our analysis uncovers two key findings: (i) spatial intelligence and robotic task execution are positively correlated in multi-view robotic scenarios; and (ii) strong performance on existing general-purpose single-view spatial understanding benchmarks does not reliably translate to success in the robotic spatial tasks assessed by our benchmark.
+              </p>
+            </div>
+          </div>
+
+          <div class="hero-figure" style="margin-top: 28px;">
+            <figure class="teaser-figure">
+              <div class="figure-media">
+                <img
+                  class="figure-image"
+                  src="./static/images/example.jpg"
+                  alt="Figure 1: Representative multi-view QA instances from MV-RoboBench">
+              </div>
+              <figcaption class="figure-caption">
+                <strong>Figure 1:</strong> Representative multi-view QA instances from the eight tasks in MV-RoboBench, with
+                spatial tasks shown on the left and robotic tasks on the right. For clarity, only simplified versions
+                with ground-truth answers are presented here, omitting distractors.
+              </figcaption>
+            </figure>
+          </div>
+
+          <div class="leaderboard-inline leaderboard-section" id="Leaderboard" style="margin-top: 28px;">
+            <h2 class="title is-3 has-text-centered">Leaderboard</h2>
+            <p class="leaderboard-caption has-text-centered">
+              Evaluation on <strong>MV-RoboBench</strong> under a unified zero-shot prompt. Sorted by <strong>Avg.</strong>
+              (higher is better).
+            </p>
+            <div class="table-container">
+              <table class="table is-fullwidth leaderboard-table">
+                <thead>
+                  <tr>
+                    <th class="rank-col" rowspan="2">Rank</th>
+                    <th class="method-col" rowspan="2">Model</th>
+                    <th class="avg-col" rowspan="2">Avg.</th>
+                    <th class="group-col" colspan="4">Spatial Tasks</th>
+                    <th class="group-col" colspan="4">Robotic Tasks</th>
+                  </tr>
+                  <tr>
+                    <th class="metric-col">Cross-View<br>Match</th>
+                    <th class="metric-col">Distance<br>Judge</th>
+                    <th class="metric-col">Viewpoint<br>ID</th>
+                    <th class="metric-col">3D Spatial<br>Consist.</th>
+                    <th class="metric-col">Action<br>Plan.</th>
+                    <th class="metric-col">Step<br>Exec.</th>
+                    <th class="metric-col">Trajectory<br>Sel.</th>
+                    <th class="metric-col">Affordance<br>Rec.</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="rank-1">
+                    <td class="rank-col">1 <span class="medal">🥇</span></td>
+                    <td class="method-col">GPT-5</td>
+                    <td class="avg-col">56.41</td>
+                    <td class="metric-col">29.00</td>
+                    <td class="metric-col">55.22</td>
+                    <td class="metric-col">44.14</td>
+                    <td class="metric-col">82.35</td>
+                    <td class="metric-col">79.41</td>
+                    <td class="metric-col">68.38</td>
+                    <td class="metric-col">54.50</td>
+                    <td class="metric-col">39.23</td>
+                  </tr>
+                  <tr class="rank-2">
+                    <td class="rank-col">2 <span class="medal">🥈</span></td>
+                    <td class="method-col">Gemini-2.5-pro</td>
+                    <td class="avg-col">49.52</td>
+                    <td class="metric-col">39.50</td>
+                    <td class="metric-col">56.22</td>
+                    <td class="metric-col">38.28</td>
+                    <td class="metric-col">49.02</td>
+                    <td class="metric-col">65.20</td>
+                    <td class="metric-col">50.85</td>
+                    <td class="metric-col">65.50</td>
+                    <td class="metric-col">31.58</td>
+                  </tr>
+                  <tr class="rank-3">
+                    <td class="rank-col">3 <span class="medal">🥉</span></td>
+                    <td class="method-col">o4-mini</td>
+                    <td class="avg-col">46.47</td>
+                    <td class="metric-col">21.50</td>
+                    <td class="metric-col">48.26</td>
+                    <td class="metric-col">26.17</td>
+                    <td class="metric-col">65.69</td>
+                    <td class="metric-col">74.51</td>
+                    <td class="metric-col">63.25</td>
+                    <td class="metric-col">44.00</td>
+                    <td class="metric-col">25.36</td>
+                  </tr>
+                  <tr>
+                    <td class="rank-col">4</td>
+                    <td class="method-col">GPT-5-mini</td>
+                    <td class="avg-col">38.28</td>
+                    <td class="metric-col">22.00</td>
+                    <td class="metric-col">49.25</td>
+                    <td class="metric-col">25.78</td>
+                    <td class="metric-col">72.55</td>
+                    <td class="metric-col">66.18</td>
+                    <td class="metric-col">48.72</td>
+                    <td class="metric-col">47.00</td>
+                    <td class="metric-col">27.75</td>
+                  </tr>
+                  <tr>
+                    <td class="rank-col">5</td>
+                    <td class="method-col">GPT-5-nano</td>
+                    <td class="avg-col">32.75</td>
+                    <td class="metric-col">21.50</td>
+                    <td class="metric-col">33.33</td>
+                    <td class="metric-col">17.58</td>
+                    <td class="metric-col">56.86</td>
+                    <td class="metric-col">39.71</td>
+                    <td class="metric-col">35.47</td>
+                    <td class="metric-col">31.00</td>
+                    <td class="metric-col">26.32</td>
+                  </tr>
+                  <tr>
+                    <td class="rank-col">6</td>
+                    <td class="method-col">Claude-3.7-think</td>
+                    <td class="avg-col">31.67</td>
+                    <td class="metric-col">24.40</td>
+                    <td class="metric-col">35.04</td>
+                    <td class="metric-col">36.00</td>
+                    <td class="metric-col">52.45</td>
+                    <td class="metric-col">21.50</td>
+                    <td class="metric-col">37.81</td>
+                    <td class="metric-col">21.08</td>
+                    <td class="metric-col">23.05</td>
+                  </tr>
+                  <tr>
+                    <td class="rank-col">7</td>
+                    <td class="method-col">GPT-5-chat</td>
+                    <td class="avg-col">31.63</td>
+                    <td class="metric-col">30.00</td>
+                    <td class="metric-col">42.79</td>
+                    <td class="metric-col">31.64</td>
+                    <td class="metric-col">4.90</td>
+                    <td class="metric-col">36.76</td>
+                    <td class="metric-col">40.17</td>
+                    <td class="metric-col">38.00</td>
+                    <td class="metric-col">27.75</td>
+                  </tr>
+                  <tr>
+                    <td class="rank-col">8</td>
+                    <td class="method-col">GPT-4.1</td>
+                    <td class="avg-col">30.90</td>
+                    <td class="metric-col">26.00</td>
+                    <td class="metric-col">43.28</td>
+                    <td class="metric-col">32.03</td>
+                    <td class="metric-col">6.37</td>
+                    <td class="metric-col">29.90</td>
+                    <td class="metric-col">31.62</td>
+                    <td class="metric-col">41.50</td>
+                    <td class="metric-col">28.23</td>
+                  </tr>
+                  <tr>
+                    <td class="rank-col">9</td>
+                    <td class="method-col">Gemini-2.0-flash</td>
+                    <td class="avg-col">28.94</td>
+                    <td class="metric-col">28.00</td>
+                    <td class="metric-col">32.84</td>
+                    <td class="metric-col">21.48</td>
+                    <td class="metric-col">7.35</td>
+                    <td class="metric-col">32.84</td>
+                    <td class="metric-col">29.91</td>
+                    <td class="metric-col">52.50</td>
+                    <td class="metric-col">20.57</td>
+                  </tr>
+                  <tr>
+                    <td class="rank-col">10</td>
+                    <td class="method-col">GPT-4o</td>
+                    <td class="avg-col">27.59</td>
+                    <td class="metric-col">24.50</td>
+                    <td class="metric-col">37.31</td>
+                    <td class="metric-col">19.92</td>
+                    <td class="metric-col">6.37</td>
+                    <td class="metric-col">33.33</td>
+                    <td class="metric-col">33.76</td>
+                    <td class="metric-col">33.00</td>
+                    <td class="metric-col">20.10</td>
+                  </tr>
+                  <tr>
+                    <td class="rank-col">11</td>
+                    <td class="method-col">Gemini-2.5-flash</td>
+                    <td class="avg-col">27.23</td>
+                    <td class="metric-col">26.50</td>
+                    <td class="metric-col">37.31</td>
+                    <td class="metric-col">27.34</td>
+                    <td class="metric-col">6.37</td>
+                    <td class="metric-col">34.80</td>
+                    <td class="metric-col">30.34</td>
+                    <td class="metric-col">42.00</td>
+                    <td class="metric-col">19.14</td>
+                  </tr>
+                  <tr>
+                    <td class="rank-col">12</td>
+                    <td class="method-col">Llama-4-Maverick</td>
+                    <td class="avg-col">26.11</td>
+                    <td class="metric-col">14.00</td>
+                    <td class="metric-col">42.79</td>
+                    <td class="metric-col">17.58</td>
+                    <td class="metric-col">5.88</td>
+                    <td class="metric-col">37.75</td>
+                    <td class="metric-col">37.18</td>
+                    <td class="metric-col">36.00</td>
+                    <td class="metric-col">20.10</td>
+                  </tr>
+                  <tr>
+                    <td class="rank-col">13</td>
+                    <td class="method-col">Claude-3.7</td>
+                    <td class="avg-col">25.47</td>
+                    <td class="metric-col">18.00</td>
+                    <td class="metric-col">35.32</td>
+                    <td class="metric-col">20.31</td>
+                    <td class="metric-col">6.86</td>
+                    <td class="metric-col">36.76</td>
+                    <td class="metric-col">29.06</td>
+                    <td class="metric-col">34.50</td>
+                    <td class="metric-col">22.97</td>
+                  </tr>
+                  <tr>
+                    <td class="rank-col">14</td>
+                    <td class="method-col">Qwen2.5-vl-72b</td>
+                    <td class="avg-col">24.29</td>
+                    <td class="metric-col">20.50</td>
+                    <td class="metric-col">34.83</td>
+                    <td class="metric-col">27.34</td>
+                    <td class="metric-col">4.90</td>
+                    <td class="metric-col">28.43</td>
+                    <td class="metric-col">27.35</td>
+                    <td class="metric-col">29.00</td>
+                    <td class="metric-col">24.88</td>
+                  </tr>
+                  <tr>
+                    <td class="rank-col">15</td>
+                    <td class="method-col">GPT-4.1-mini</td>
+                    <td class="avg-col">23.98</td>
+                    <td class="metric-col">28.50</td>
+                    <td class="metric-col">33.83</td>
+                    <td class="metric-col">25.00</td>
+                    <td class="metric-col">7.84</td>
+                    <td class="metric-col">26.47</td>
+                    <td class="metric-col">21.79</td>
+                    <td class="metric-col">32.00</td>
+                    <td class="metric-col">18.18</td>
+                  </tr>
+                  <tr>
+                    <td class="rank-col">16</td>
+                    <td class="method-col">Claude-3.5</td>
+                    <td class="avg-col">23.71</td>
+                    <td class="metric-col">17.50</td>
+                    <td class="metric-col">27.86</td>
+                    <td class="metric-col">20.31</td>
+                    <td class="metric-col">8.82</td>
+                    <td class="metric-col">34.80</td>
+                    <td class="metric-col">20.09</td>
+                    <td class="metric-col">33.00</td>
+                    <td class="metric-col">27.27</td>
+                  </tr>
+                  <tr>
+                    <td class="rank-col">17</td>
+                    <td class="method-col">InternVL3-78b</td>
+                    <td class="avg-col">23.25</td>
+                    <td class="metric-col">19.00</td>
+                    <td class="metric-col">28.86</td>
+                    <td class="metric-col">23.83</td>
+                    <td class="metric-col">11.76</td>
+                    <td class="metric-col">29.90</td>
+                    <td class="metric-col">29.06</td>
+                    <td class="metric-col">26.50</td>
+                    <td class="metric-col">21.05</td>
+                  </tr>
+                  <tr>
+                    <td class="rank-col">18</td>
+                    <td class="method-col">GPT-4-turbo</td>
+                    <td class="avg-col">22.91</td>
+                    <td class="metric-col">19.00</td>
+                    <td class="metric-col">13.43</td>
+                    <td class="metric-col">19.92</td>
+                    <td class="metric-col">7.84</td>
+                    <td class="metric-col">41.67</td>
+                    <td class="metric-col">31.20</td>
+                    <td class="metric-col">20.00</td>
+                    <td class="metric-col">27.27</td>
+                  </tr>
+                  <tr>
+                    <td class="rank-col">19</td>
+                    <td class="method-col">InternVL3-38b</td>
+                    <td class="avg-col">22.80</td>
+                    <td class="metric-col">24.50</td>
+                    <td class="metric-col">25.87</td>
+                    <td class="metric-col">23.44</td>
+                    <td class="metric-col">6.86</td>
+                    <td class="metric-col">27.94</td>
+                    <td class="metric-col">25.21</td>
+                    <td class="metric-col">27.50</td>
+                    <td class="metric-col">21.05</td>
+                  </tr>
+                  <tr>
+                    <td class="rank-col">20</td>
+                    <td class="method-col">GPT-4o-mini</td>
+                    <td class="avg-col">22.52</td>
+                    <td class="metric-col">24.00</td>
+                    <td class="metric-col">22.89</td>
+                    <td class="metric-col">23.44</td>
+                    <td class="metric-col">11.76</td>
+                    <td class="metric-col">24.51</td>
+                    <td class="metric-col">28.21</td>
+                    <td class="metric-col">20.50</td>
+                    <td class="metric-col">23.44</td>
+                  </tr>
+                  <tr>
+                    <td class="rank-col">21</td>
+                    <td class="method-col">Qwen2.5-vl-32b</td>
+                    <td class="avg-col">22.48</td>
+                    <td class="metric-col">20.50</td>
+                    <td class="metric-col">25.87</td>
+                    <td class="metric-col">25.39</td>
+                    <td class="metric-col">10.78</td>
+                    <td class="metric-col">24.51</td>
+                    <td class="metric-col">19.66</td>
+                    <td class="metric-col">30.50</td>
+                    <td class="metric-col">22.49</td>
+                  </tr>
+                  <tr>
+                    <td class="rank-col">22</td>
+                    <td class="method-col">Llama-4-Scout</td>
+                    <td class="avg-col">22.12</td>
+                    <td class="metric-col">20.50</td>
+                    <td class="metric-col">22.39</td>
+                    <td class="metric-col">23.83</td>
+                    <td class="metric-col">7.35</td>
+                    <td class="metric-col">25.49</td>
+                    <td class="metric-col">28.21</td>
+                    <td class="metric-col">23.00</td>
+                    <td class="metric-col">18.18</td>
+                  </tr>
+                  <tr>
+                    <td class="rank-col">23</td>
+                    <td class="method-col">InternVL3-14b</td>
+                    <td class="avg-col">21.47</td>
+                    <td class="metric-col">19.50</td>
+                    <td class="metric-col">22.39</td>
+                    <td class="metric-col">24.61</td>
+                    <td class="metric-col">10.78</td>
+                    <td class="metric-col">23.53</td>
+                    <td class="metric-col">23.50</td>
+                    <td class="metric-col">24.00</td>
+                    <td class="metric-col">23.44</td>
+                  </tr>
+                  <tr>
+                    <td class="rank-col">24</td>
+                    <td class="method-col">InternVL3-8b</td>
+                    <td class="avg-col">20.97</td>
+                    <td class="metric-col">19.00</td>
+                    <td class="metric-col">21.39</td>
+                    <td class="metric-col">26.17</td>
+                    <td class="metric-col">12.75</td>
+                    <td class="metric-col">26.47</td>
+                    <td class="metric-col">21.37</td>
+                    <td class="metric-col">20.50</td>
+                    <td class="metric-col">20.10</td>
+                  </tr>
+                  <tr>
+                    <td class="rank-col">25</td>
+                    <td class="method-col">GPT-4.1-nano</td>
+                    <td class="avg-col">20.85</td>
+                    <td class="metric-col">17.50</td>
+                    <td class="metric-col">25.37</td>
+                    <td class="metric-col">18.75</td>
+                    <td class="metric-col">14.71</td>
+                    <td class="metric-col">22.55</td>
+                    <td class="metric-col">22.22</td>
+                    <td class="metric-col">20.00</td>
+                    <td class="metric-col">17.22</td>
+                  </tr>
+                  <tr>
+                    <td class="rank-col">26</td>
+                    <td class="method-col">Qwen2.5-vl-7b</td>
+                    <td class="avg-col">20.84</td>
+                    <td class="metric-col">20.50</td>
+                    <td class="metric-col">20.40</td>
+                    <td class="metric-col">20.70</td>
+                    <td class="metric-col">8.82</td>
+                    <td class="metric-col">22.55</td>
+                    <td class="metric-col">26.07</td>
+                    <td class="metric-col">24.50</td>
+                    <td class="metric-col">22.49</td>
+                  </tr>
+                  <tr>
+                    <td class="rank-col">27</td>
+                    <td class="method-col">Gemma-3-27b</td>
+                    <td class="avg-col">20.55</td>
+                    <td class="metric-col">21.50</td>
+                    <td class="metric-col">23.88</td>
+                    <td class="metric-col">20.31</td>
+                    <td class="metric-col">9.31</td>
+                    <td class="metric-col">20.10</td>
+                    <td class="metric-col">23.08</td>
+                    <td class="metric-col">29.00</td>
+                    <td class="metric-col">17.22</td>
+                  </tr>
+                  <tr>
+                    <td class="rank-col">28</td>
+                    <td class="method-col">Gemma-3-12b</td>
+                    <td class="avg-col">20.49</td>
+                    <td class="metric-col">18.00</td>
+                    <td class="metric-col">26.37</td>
+                    <td class="metric-col">20.31</td>
+                    <td class="metric-col">9.80</td>
+                    <td class="metric-col">22.55</td>
+                    <td class="metric-col">20.94</td>
+                    <td class="metric-col">25.50</td>
+                    <td class="metric-col">20.57</td>
+                  </tr>
+                  <tr>
+                    <td class="rank-col">29</td>
+                    <td class="method-col">Qwen2.5-vl-3b</td>
+                    <td class="avg-col">20.37</td>
+                    <td class="metric-col">17.50</td>
+                    <td class="metric-col">21.89</td>
+                    <td class="metric-col">22.66</td>
+                    <td class="metric-col">17.65</td>
+                    <td class="metric-col">17.16</td>
+                    <td class="metric-col">17.95</td>
+                    <td class="metric-col">22.00</td>
+                    <td class="metric-col">25.84</td>
+                  </tr>
+                  <tr>
+                    <td class="rank-col">30</td>
+                    <td class="method-col">Gemma-3-4b</td>
+                    <td class="avg-col">19.79</td>
+                    <td class="metric-col">21.00</td>
+                    <td class="metric-col">22.89</td>
+                    <td class="metric-col">21.09</td>
+                    <td class="metric-col">11.76</td>
+                    <td class="metric-col">17.65</td>
+                    <td class="metric-col">16.67</td>
+                    <td class="metric-col">25.50</td>
+                    <td class="metric-col">22.01</td>
+                  </tr>
+                  <tr>
+                    <td class="rank-col">31</td>
+                    <td class="method-col">Random Choice</td>
+                    <td class="avg-col">19.71</td>
+                    <td class="metric-col">17.80</td>
+                    <td class="metric-col">19.40</td>
+                    <td class="metric-col">20.00</td>
+                    <td class="metric-col">19.07</td>
+                    <td class="metric-col">19.41</td>
+                    <td class="metric-col">21.54</td>
+                    <td class="metric-col">20.65</td>
+                    <td class="metric-col">19.81</td>
+                  </tr>
+                  <tr>
+                    <td class="rank-col">32</td>
+                    <td class="method-col">InternVL3-2b</td>
+                    <td class="avg-col">18.93</td>
+                    <td class="metric-col">16.50</td>
+                    <td class="metric-col">15.42</td>
+                    <td class="metric-col">20.70</td>
+                    <td class="metric-col">20.59</td>
+                    <td class="metric-col">17.16</td>
+                    <td class="metric-col">20.94</td>
+                    <td class="metric-col">21.00</td>
+                    <td class="metric-col">19.14</td>
+                  </tr>
+                  <tr>
+                    <td class="rank-col">33</td>
+                    <td class="method-col">GPT-3.5-turbo</td>
+                    <td class="avg-col">18.52</td>
+                    <td class="metric-col">15.50</td>
+                    <td class="metric-col">22.39</td>
+                    <td class="metric-col">20.31</td>
+                    <td class="metric-col">12.25</td>
+                    <td class="metric-col">21.57</td>
+                    <td class="metric-col">18.38</td>
+                    <td class="metric-col">23.00</td>
+                    <td class="metric-col">16.75</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="hero-figure" style="margin-top: 28px;">
+            <figure class="teaser-figure">
+              <div class="figure-media">
+                <img
+                  class="figure-image"
+                  src="./static/images/statistic_drawed.jpg"
+                  alt="Data distribution of MV-RoboBench across subtasks and sources">
+              </div>
+              <figcaption class="figure-caption">
+                <strong>Figure 2:</strong> MV-RoboBench data distribution across subtasks and sources (AgiWorld, BridgeV2),
+                highlighting the balance between spatial and robotic domains.
+              </figcaption>
+            </figure>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <div class="bibtex-header">
+      <h2 class="title">BibTeX</h2>
+      <button class="button is-small is-light bibtex-copy" type="button" id="bibtex-copy-btn">Copy</button>
+    </div>
+    <pre><code id="bibtex-content">@article{feng2025seeing,
+  title={Seeing across views: Benchmarking spatial reasoning of vision-language models in robotic scenes},
+  author={Feng, Zhiyuan and Kang, Zhaolu and Wang, Qijie and Du, Zhiying and Yan, Jiongrui and Shi, Shubin and Yuan, Chengbo and Liang, Huizhi and Deng, Yu and Li, Qixiu and others},
+  journal={arXiv preprint arXiv:2510.19400},
+  year={2025}
+}</code></pre>
+  </div>
+</section>
+
+
+<footer class="footer">
+  <div class="container">
+    <div class="content has-text-centered">
+      <a class="icon-link" href="https://github.com/microsoft/MV-RoboBench" class="external-link" disabled>
+        <i class="fab fa-github"></i>
+      </a>
+    </div>
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content"></div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
