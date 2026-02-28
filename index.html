@@ -53,6 +53,9 @@
           <a class="navbar-item" href="https://microsoft.github.io/VITRA/">
             VITRA
           </a>
+          <a class="navbar-item" href="https://aaronfengzy.github.io/HumanCentricToVLA-Survey/">
+            Human-Centric VLA Survey
+          </a>
         </div>
       </div>
       
@@ -71,6 +74,15 @@
           
           <div class="is-size-3 publication-venue" style="color: #2974b5; font-weight: 400; margin-bottom: 20px;">
             ICLR 2026
+            <span class="icon" style="margin-left: 8px; color: #f39c12;" aria-label="Highlight">
+              <i class="fas fa-fire"></i>
+            </span>
+            <span class="icon" style="margin-left: 4px; color: #f39c12;" aria-label="Highlight">
+              <i class="fas fa-fire"></i>
+            </span>
+            <span class="icon" style="margin-left: 4px; color: #f39c12;" aria-label="Highlight">
+              <i class="fas fa-fire"></i>
+            </span>
           </div>
           
           <div class="is-size-5 publication-authors author-lines" style="line-height: 1.6;">
@@ -116,9 +128,8 @@
             <span class="author-block"><sup>2</sup>Peking University</span>&nbsp;&nbsp;&nbsp;
             <span class="author-block"><sup>3</sup>Fudan University</span>
             <br>
-            <span class="author-block"><sup>4</sup>Microsoft Research Asia</span>
-            <br>
-            <span class="author-block"><sup>5</sup>Hong Kong University of Science and Technology</span>&nbsp;&nbsp;&nbsp;
+            <span class="author-block"><sup>4</sup>Microsoft Research Asia</span>&nbsp;&nbsp;&nbsp;
+            <span class="author-block"><sup>5</sup>HKUST</span>&nbsp;&nbsp;&nbsp;
             <span class="author-block"><sup>6</sup>Zhejiang University</span>
           </div>
 
@@ -179,6 +190,30 @@
               </figcaption>
             </figure>
           </div>
+          <div class="author-meta-divider" style="margin-top: 24px;"></div>
+
+          <div class="hero-figure" style="margin-top: 28px;">
+            <figure class="teaser-figure">
+              <div class="figure-media">
+                <img
+                  class="figure-image"
+                  src="./static/images/table1.png"
+                  alt="Table 1: Comparison of spatial reasoning benchmarks">
+              </div>
+              <figcaption class="figure-caption" style="text-align: left;"></figcaption>
+            </figure>
+          </div>
+
+          <div class="content has-text-justified" style="margin-top: 12px;">
+            <p>
+              Existing spatial reasoning benchmarks mostly focus on single-view inputs or non-embodied settings, leaving
+              the multi-view robotic manipulation regime underexplored. MV-RoboBench addresses this gap with synchronized
+              multi-camera observations from real robot demonstrations, covering both spatial reasoning and robotic
+              execution tasks. The benchmark includes 1.7K human-curated QA items across diverse tasks and environments,
+              enabling a systematic evaluation of whether VLMs can integrate complementary viewpoints for decision-making.
+            </p>
+          </div>
+          <div class="author-meta-divider" style="margin-top: 24px;"></div>
 
           <div class="leaderboard-inline leaderboard-section" id="Leaderboard" style="margin-top: 28px;">
             <h2 class="title is-3 has-text-centered">Leaderboard</h2>
@@ -641,6 +676,24 @@
               </table>
             </div>
           </div>
+          <div class="author-meta-divider" style="margin-top: 24px;"></div>
+
+          <div class="hero-figure" style="margin-top: 28px;">
+            <figure class="teaser-figure">
+              <div class="figure-media">
+                <img
+                  class="figure-image"
+                  src="./static/images/data_pipeline.jpg"
+                  alt="Construction pipeline of MV-RoboBench">
+              </div>
+              <figcaption class="figure-caption" style="text-align: left;">
+                <strong>Figure 2:</strong> Construction pipeline of MV-RoboBench with three stages: data collection from
+                synchronized multi-view demonstrations, template-guided QA generation, and human-in-the-loop quality
+                review to refine and balance the final QA pool.
+              </figcaption>
+            </figure>
+          </div>
+          <div class="author-meta-divider" style="margin-top: 24px;"></div>
 
           <div class="hero-figure" style="margin-top: 28px;">
             <figure class="teaser-figure">
@@ -650,12 +703,56 @@
                   src="./static/images/statistic_drawed.jpg"
                   alt="Data distribution of MV-RoboBench across subtasks and sources">
               </div>
-              <figcaption class="figure-caption">
-                <strong>Figure 2:</strong> MV-RoboBench data distribution across subtasks and sources (AgiWorld, BridgeV2),
+              <figcaption class="figure-caption" style="text-align: left;">
+                <strong>Figure 3:</strong> MV-RoboBench data distribution across subtasks and sources (AgiWorld, BridgeV2),
                 highlighting the balance between spatial and robotic domains.
               </figcaption>
             </figure>
           </div>
+          <div class="author-meta-divider" style="margin-top: 24px;"></div>
+
+          <div class="content has-text-justified" style="margin-top: 12px;">
+            <h2 class="title is-3 has-text-centered">From Perception to Action: Correlation and Transfer</h2>
+            <p>
+              We analyze two axes: the internal correlation between spatial and robotic reasoning, and the external
+              generalization from single-view to multi-view spatial intelligence. The results highlight that spatial and
+              robotic reasoning can align, but only for models with sufficient multi-view integration ability, and that
+              strong single-view performance does not reliably transfer to embodied multi-view scenarios.
+            </p>
+          </div>
+
+          <div class="hero-figure" style="margin-top: 28px;">
+            <figure class="teaser-figure">
+              <div class="figure-media">
+                <img
+                  class="figure-image"
+                  src="./static/images/mv_robobench_scatter_pretty_annotated_gpt5.png"
+                  alt="Spatial vs. robotic accuracy on MV-RoboBench">
+              </div>
+              <figcaption class="figure-caption" style="text-align: left;">
+                <strong>Figure 4:</strong> Spatial vs. robotic accuracy on <strong>MV-RoboBench</strong>. Models clustered
+                near the lower-left operate close to random guessing, while reasoning-enhanced proprietary models show a
+                clear upward trend across both axes.
+              </figcaption>
+            </figure>
+          </div>
+          <div class="author-meta-divider" style="margin-top: 24px;"></div>
+
+          <div class="hero-figure" style="margin-top: 28px;">
+            <figure class="teaser-figure">
+              <div class="figure-media">
+                <img
+                  class="figure-image"
+                  src="./static/images/omni_vs_mv_zoomed_1x2.png"
+                  alt="Comparison of model accuracies on OmniSpatial versus MV-RoboBench">
+              </div>
+              <figcaption class="figure-caption" style="text-align: left;">
+                <strong>Figure 5:</strong> Comparison of model accuracies on OmniSpatial versus MV-RoboBench, with the left
+                plot for spatial subtasks and the right plot for robotic subtasks.
+              </figcaption>
+            </figure>
+          </div>
+          <div class="author-meta-divider" style="margin-top: 24px;"></div>
 
         </div>
       </div>
