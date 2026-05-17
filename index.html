@@ -8,7 +8,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Seeing Across Views: Benchmarking Spatial Reasoning of Vision-Language Models in Robotic Scenes</title>
 
-  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+  <link href="https://fonts.font.im/css?family=Google+Sans|Noto+Sans|Castoro"
         rel="stylesheet">
 
   <link rel="stylesheet" href="./static/css/bulma.min.css">
@@ -20,7 +20,7 @@
   <link rel="stylesheet" href="./static/css/index.css">
   <link rel="icon" href="./static/images/favicon.svg">
 
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
   <script defer src="./static/js/fontawesome.all.min.js"></script>
   <script src="./static/js/bulma-carousel.min.js"></script>
   <script src="./static/js/bulma-slider.min.js"></script>
@@ -56,6 +56,12 @@
           <a class="navbar-item" href="https://aaronfengzy.github.io/HumanCentricToVLA-Survey/">
             Human-Centric VLA Survey
           </a>
+          <a class="navbar-item" href="https://microsoft.github.io/HiSpatial/">
+            HiSpatial
+          </a>
+          <a class="navbar-item" href="https://unix-ai-lab.github.io/WorldReasonBench/">
+            WorldReasonBench
+          </a>
         </div>
       </div>
       
@@ -69,7 +75,7 @@
         <div class="column has-text-centered">
           
           <h1 class="title is-2 publication-title">
-            Seeing Across Views: Benchmarking Spatial<br>Reasoning of Vision-Language Models in Robotic Scenes
+            Seeing Across Views: Benchmarking Spatial Reasoning<br>of Vision-Language Models in Robotic Scenes
           </h1>
           
           <div class="is-size-3 publication-venue" style="color: #2974b5; font-weight: 400; margin-bottom: 20px;">
@@ -160,8 +166,11 @@
           </div>
           
           <div class="abstract-inline" style="margin-top: 28px;">
-            <h2 class="title is-3">Abstract</h2>
-            <div class="content has-text-justified">
+            <div class="section-heading-wrap">
+              <span class="section-kicker">01 · Overview</span>
+              <h2 class="title is-3">Abstract</h2>
+            </div>
+            <div class="content has-text-justified" style="box-shadow:none;border:none;padding:0;background:transparent;">
               <p>
                 Vision-language models (VLMs) are essential to Embodied AI, enabling robots to perceive, reason, and act in complex environments. They also serve as the foundation for the recent Vision-Language-Action (VLA) models. Yet most evaluations of VLMs focus on single-view settings, leaving their ability to integrate multi-view information underexplored. At the same time, multi-camera setups are increasingly standard in robotic platforms, as they provide complementary perspectives to mitigate occlusion and depth ambiguity. Whether VLMs can effectively leverage such multi-view inputs for robotic reasoning therefore remains an open question.
               </p>
@@ -216,7 +225,10 @@
           <div class="author-meta-divider" style="margin-top: 24px;"></div>
 
           <div class="leaderboard-inline leaderboard-section" id="Leaderboard" style="margin-top: 28px;">
-            <h2 class="title is-3 has-text-centered">Leaderboard</h2>
+            <div class="section-heading-wrap">
+              <span class="section-kicker">02 · Leaderboard</span>
+              <h2 class="title is-3 has-text-centered">Leaderboard</h2>
+            </div>
             <p class="leaderboard-caption has-text-centered">
               Evaluation on <strong>MV-RoboBench</strong> under a unified zero-shot prompt. Sorted by <strong>Avg.</strong>
               (higher is better).
@@ -712,7 +724,10 @@
           <div class="author-meta-divider" style="margin-top: 24px;"></div>
 
           <div class="content has-text-justified" style="margin-top: 12px;">
-            <h2 class="title is-3 has-text-centered">From Perception to Action: Correlation and Transfer</h2>
+            <div class="section-heading-wrap">
+              <span class="section-kicker">03 · Analysis</span>
+              <h2 class="title is-3 has-text-centered">From Perception to Action: Correlation and Transfer</h2>
+            </div>
             <p>
               We analyze two axes: the internal correlation between spatial and robotic reasoning, and the external
               generalization from single-view to multi-view spatial intelligence. The results highlight that spatial and
@@ -762,6 +777,9 @@
 
 <section class="section" id="BibTeX">
   <div class="container is-max-desktop content">
+    <div class="section-heading-wrap" style="align-items: flex-start; text-align:left;">
+      <span class="section-kicker">04 · Citation</span>
+    </div>
     <div class="bibtex-header">
       <h2 class="title">BibTeX</h2>
       <button class="button is-small is-light bibtex-copy" type="button" id="bibtex-copy-btn">Copy</button>

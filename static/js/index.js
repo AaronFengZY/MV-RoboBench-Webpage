@@ -125,4 +125,54 @@ $(document).ready(function() {
       }
     }
 
+    // ---------- Leaderboard heatmap shading ----------
+    // For each numeric column (avg + per-metric), compute min/max across body
+    // rows and assign a normalized intensity (0..1) so cells reveal a soft
+    // indigo gradient — higher = stronger.
+    (function applyLeaderboardHeatmap() {
+      var table = document.querySelector('.leaderboard-table');
+      if (!table) return;
+      var rows = table.querySelectorAll('tbody tr');
+      if (!rows.length) return;
+
+      // Collect columns to shade: .avg-col and .metric-col
+      var sampleRow = rows[0];
+      var cells = sampleRow.children;
+      var columnIndices = [];
+      for (var i = 0; i < cells.length; i++) {
+        if (cells[i].classList.contains('avg-col') ||
+            cells[i].classList.contains('metric-col')) {
+          columnIndices.push(i);
+        }
+      }
+
+      columnIndices.forEach(function(colIdx) {
+        var values = [];
+        rows.forEach(function(row) {
+          var cell = row.children[colIdx];
+          if (!cell) return;
+          var v = parseFloat((cell.textContent || '').trim());
+          values.push(isNaN(v) ? null : v);
+        });
+        var nums = values.filter(function(v) { return v !== null; });
+        if (nums.length < 2) return;
+        var min = Math.min.apply(null, nums);
+        var max = Math.max.apply(null, nums);
+        var range = max - min;
+        if (range <= 0) return;
+
+        rows.forEach(function(row, rIdx) {
+          var cell = row.children[colIdx];
+          if (!cell) return;
+          var v = values[rIdx];
+          if (v === null) return;
+          var t = (v - min) / range; // 0..1
+          // Gentle curve so mid values still get some color
+          t = Math.pow(t, 0.85);
+          cell.style.setProperty('--t', t.toFixed(3));
+          cell.setAttribute('data-heat', '');
+        });
+      });
+    })();
+
 })
